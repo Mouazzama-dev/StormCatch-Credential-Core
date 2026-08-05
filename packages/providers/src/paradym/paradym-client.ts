@@ -1,7 +1,8 @@
 import type { ParadymConfig } from "./config.js";
+import type { ParadymApiClient } 
+from "./paradym-api-client.js";
 
-
-export class ParadymClient {
+export class ParadymClient implements ParadymApiClient  {
 
   constructor(
     private readonly config: ParadymConfig

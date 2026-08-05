@@ -1,12 +1,12 @@
-import { ParadymClient } from "./paradym-client.js";
-
+import type { ParadymApiClient }
+from "./paradym-api-client.js";
 
 export class ParadymWallet {
 
 
   constructor(
-    private readonly client: ParadymClient
-  ) {}
+  private readonly client: ParadymApiClient
+) {}
 
 
 

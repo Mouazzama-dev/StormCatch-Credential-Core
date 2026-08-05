@@ -1,4 +1,5 @@
-import { ParadymClient } from "./paradym-client.js";
+import type { ParadymApiClient }
+from "./paradym-api-client.js";
 import type {
   CredentialIssueRequest,
   CredentialIssueResponse
@@ -9,9 +10,8 @@ export class ParadymIssuer {
 
 
   constructor(
-    private readonly client: ParadymClient
-  ) {}
-
+  private readonly client: ParadymApiClient
+) {}
 
 
   async issue(

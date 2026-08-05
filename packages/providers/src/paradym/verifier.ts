@@ -1,5 +1,5 @@
-import { ParadymClient } from "./paradym-client.js";
-
+import type { ParadymApiClient }
+from "./paradym-api-client.js";
 import type {
   PresentationRequest,
   PresentationResponse
@@ -10,8 +10,8 @@ export class ParadymVerifier {
 
 
   constructor(
-    private readonly client: ParadymClient
-  ) {}
+  private readonly client: ParadymApiClient
+) {}
 
 
 
