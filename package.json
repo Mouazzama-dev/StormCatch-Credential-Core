@@ -21,6 +21,10 @@
   "bugs": {
     "url": "https://github.com/Mouazzama-dev/StormCatch-Credential-Core/issues"
   },
-  "homepage": "https://github.com/Mouazzama-dev/StormCatch-Credential-Core#readme"
+  "homepage": "https://github.com/Mouazzama-dev/StormCatch-Credential-Core#readme",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
 }
-

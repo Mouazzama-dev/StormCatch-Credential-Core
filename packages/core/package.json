@@ -1,0 +1,11 @@
+{
+  "name": "@stormcatch/core",
+  "version": "0.1.0",
+  "description": "Core domain models and credential lifecycle primitives for Stormcatch",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  }
+}
