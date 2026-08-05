@@ -8,8 +8,10 @@ import type {
   RevocationRequest
 } from "./types.js";
 
-import { ParadymClient } from "./paradym-client.js";
 
+import { ParadymIssuer } from "./issuer.js";
+import { ParadymVerifier } from "./verifier.js";
+import { ParadymWallet } from "./wallet.js";
 
 
 
@@ -17,9 +19,11 @@ export class ParadymProvider
 implements CredentialProvider {
 
 
-  constructor(
-    private readonly client: ParadymClient
-  ) {}
+    constructor(
+  private readonly issuer: ParadymIssuer,
+  private readonly verifier: ParadymVerifier,
+  private readonly wallet: ParadymWallet
+){}
 
 
   async issueCredential(
@@ -27,14 +31,8 @@ implements CredentialProvider {
   ): Promise<CredentialIssueResponse> {
 
 
-    const response =
-      await this.client.post(
-        "/credentials/issue",
-        request
-      );
 
-
-    return response as CredentialIssueResponse;
+     return this.issuer.issue(request);
 
   }
 
@@ -45,15 +43,7 @@ implements CredentialProvider {
   ): Promise<PresentationResponse> {
 
 
-    const response =
-      await this.client.post(
-        "/presentations/request",
-        request
-      );
-
-
-    return response as PresentationResponse;
-
+    return this.verifier.requestPresentation(request);
   }
 
   
@@ -70,11 +60,7 @@ implements CredentialProvider {
 ): Promise<void> {
 
 
- await this.client.post(
-   "/credentials/revoke",
-   request
- );
-
+    return this.issuer.revoke(request);
 }
 
 }
