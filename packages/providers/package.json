@@ -1,0 +1,14 @@
+{
+  "name": "@stormcatch/providers",
+  "version": "0.1.0",
+  "description": "Credential provider adapters",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@stormcatch/core": "^0.1.0"
+  }
+}
