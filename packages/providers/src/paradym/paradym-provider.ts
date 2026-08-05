@@ -1,41 +1,80 @@
-import type { CredentialProvider }
-from "@stormcatch/core";
+import type { CredentialProvider } from "@stormcatch/core";
+
+import type {
+  CredentialIssueRequest,
+  CredentialIssueResponse,
+  PresentationRequest,
+  PresentationResponse,
+  RevocationRequest
+} from "./types.js";
+
+import { ParadymClient } from "./paradym-client.js";
 
 
-export class ParadymProvider 
+
+
+export class ParadymProvider
 implements CredentialProvider {
 
 
- async issueCredential(
-  request: unknown
- ): Promise<unknown> {
+  constructor(
+    private readonly client: ParadymClient
+  ) {}
 
-  throw new Error(
-    "Paradym OID4VCI implementation pending"
-  );
 
+  async issueCredential(
+    request: CredentialIssueRequest
+  ): Promise<CredentialIssueResponse> {
+
+
+    const response =
+      await this.client.post(
+        "/credentials/issue",
+        request
+      );
+
+
+    return response as CredentialIssueResponse;
+
+  }
+
+
+
+  async requestPresentation(
+    request: PresentationRequest
+  ): Promise<PresentationResponse> {
+
+
+    const response =
+      await this.client.post(
+        "/presentations/request",
+        request
+      );
+
+
+    return response as PresentationResponse;
+
+  }
+
+  
+
+
+
+
+  async revokeCredential(
+ request:{
+   credentialId:string;
+   issuerDid:string;
+   reason?:string;
  }
+): Promise<void> {
 
 
- async requestPresentation(
-  request: unknown
- ): Promise<unknown> {
+ await this.client.post(
+   "/credentials/revoke",
+   request
+ );
 
-  throw new Error(
-    "Paradym OID4VP implementation pending"
-  );
-
- }
-
-
- async revokeCredential(
-  credentialId: string
- ): Promise<void> {
-
-  throw new Error(
-    "Paradym status update implementation pending"
-  );
-
- }
+}
 
 }

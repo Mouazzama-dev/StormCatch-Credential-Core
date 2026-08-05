@@ -1,5 +1,11 @@
-import type { CredentialRecord } 
-from "../credential-record.js";
+import type {
+  CredentialProvider
+} from "../providers/credential-provider.js";
+
+import type {
+  CredentialRecord
+} from "../credential-record.js";
+
 
 import {
   CredentialStatus
@@ -9,9 +15,28 @@ import {
 export class CredentialLifecycleService {
 
 
-  issue(
+  constructor(
+    private readonly provider: CredentialProvider
+  ) {}
+
+
+
+  async issue(
     credential: CredentialRecord
-  ): CredentialRecord {
+  ): Promise<CredentialRecord> {
+
+
+    await this.provider.issueCredential({
+
+  credentialType: credential.type,
+
+  issuerDid: credential.issuerId,
+
+  subjectDid: credential.subjectId,
+
+  claims: credential.claims
+
+});
 
     return {
       ...credential,
@@ -23,53 +48,21 @@ export class CredentialLifecycleService {
 
 
 
-  expire(
-    credential: CredentialRecord,
-    now: Date = new Date()
-  ): CredentialRecord {
+    async revoke(
+        credential: CredentialRecord
+    ): Promise<void> {
 
 
-    if (
-      credential.validUntil &&
-      now > credential.validUntil
-    ) {
+        await this.provider.revokeCredential({
 
-      return {
-        ...credential,
-        status: CredentialStatus.EXPIRED
-      };
+    credentialId: credential.id,
 
-    }
+    issuerDid: credential.issuerId,
 
+    reason: "manual_revocation"
 
-    return credential;
-
+    });
   }
 
-
-
-  revoke(
-    credential: CredentialRecord
-  ): CredentialRecord {
-
-
-    if (
-      credential.status !== CredentialStatus.ACTIVE
-    ) {
-
-      throw new Error(
-        "Only active credentials can be revoked"
-      );
-
-    }
-
-
-    return {
-      ...credential,
-      status: CredentialStatus.REVOKED,
-      revokedAt: new Date()
-    };
-
-  }
 
 }

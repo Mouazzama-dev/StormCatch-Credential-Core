@@ -9,6 +9,8 @@ export interface CredentialRecord {
 
   subjectId: string;
 
+  claims: Record<string, unknown>;
+
   status: CredentialStatus;
 
   issuedAt: Date;

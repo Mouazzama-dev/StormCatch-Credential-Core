@@ -1,17 +1,38 @@
 export interface CredentialProvider {
 
   issueCredential(
-    credentialRequest: unknown
+    credentialRequest: {
+      credentialType: string;
+
+      issuerDid: string;
+
+      subjectDid: string;
+
+      claims: Record<string, unknown>;
+    }
   ): Promise<unknown>;
 
 
-  requestPresentation(
-    presentationRequest: unknown
-  ): Promise<unknown>;
+
+    requestPresentation(
+    presentationRequest: {
+        verifierDid: string;
+
+        credentialTypes: string[];
+
+        claims?: Record<string, string[]>;
+    }
+    ): Promise<unknown>;
 
 
-  revokeCredential(
-    credentialId: string
-  ): Promise<void>;
 
+    revokeCredential(
+    request: {
+        credentialId: string;
+
+        issuerDid: string;
+
+        reason?: string;
+    }
+    ): Promise<void>;
 }
