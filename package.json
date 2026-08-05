@@ -1,0 +1,26 @@
+{
+  "name": "stormcatch-credential-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Stormcatch credential lifecycle SDK",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "echo \"No tests yet\"",
+    "build": "echo \"No build yet\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mouazzama-dev/StormCatch-Credential-Core.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mouazzama-dev/StormCatch-Credential-Core/issues"
+  },
+  "homepage": "https://github.com/Mouazzama-dev/StormCatch-Credential-Core#readme"
+}
+
