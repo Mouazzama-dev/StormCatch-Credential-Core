@@ -54,3 +54,27 @@ console.log(
  "Issued:",
  issued
 );
+
+const presentation =
+ await lifecycle.present({
+
+   verifierDid:
+   "did:web:gate-5",
+
+   credentialTypes:[
+     "PayloadCredential"
+   ],
+
+   claims:{
+     payload_type:[
+       "sc:medicine"
+     ]
+   }
+
+ });
+
+
+console.log(
+ "Presentation:",
+ presentation
+);

@@ -64,5 +64,20 @@ export class CredentialLifecycleService {
     });
   }
 
+async present(
+  request: {
+    verifierDid: string;
 
+    credentialTypes: string[];
+
+    claims?: Record<string,string[]>;
+  }
+): Promise<unknown> {
+
+
+  return this.provider.requestPresentation(
+    request
+  );
+
+}
 }
