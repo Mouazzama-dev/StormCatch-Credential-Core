@@ -14,12 +14,15 @@ export interface CredentialIssueRequest {
 
 export interface CredentialIssueResponse {
 
-  credentialId: string;
+  issuanceId: string;
 
-  credentialData: unknown;
+  status: string;
+
+  offerUri: string;
+
+  offerQrUri?: string;
 
 }
-
 
 
 

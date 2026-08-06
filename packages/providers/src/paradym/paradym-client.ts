@@ -23,8 +23,9 @@ export class ParadymClient implements ParadymApiClient  {
         headers: {
   "Content-Type": "application/json",
 
-  "Authorization":
-    `Bearer ${this.config.apiKey}`,
+  "x-access-token":
+  this.config.apiKey
+,
 
   ...(this.config.tenantId
     ? {
@@ -51,5 +52,11 @@ export class ParadymClient implements ParadymApiClient  {
     return await response.json();
 
   }
+
+  getWalletId(): string {
+
+  return this.config.walletId;
+
+}
 
 }

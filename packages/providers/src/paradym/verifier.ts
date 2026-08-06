@@ -1,5 +1,9 @@
 import type { ParadymApiClient }
 from "./paradym-api-client.js";
+
+import type { ParadymConfig }
+from "./config.js";
+
 import type {
   PresentationRequest,
   PresentationResponse
@@ -14,13 +18,18 @@ import {
   ParadymEndpoints
 } from "./endpoints.js";
 
+import {
+  withWalletId
+} from "./url.js";
+
 
 export class ParadymVerifier {
 
 
   constructor(
-  private readonly client: ParadymApiClient
-) {}
+    private readonly client: ParadymApiClient,
+    private readonly config: ParadymConfig
+  ) {}
 
 
 
@@ -28,14 +37,23 @@ export class ParadymVerifier {
     request: PresentationRequest
   ): Promise<PresentationResponse> {
 
-const response =
- await this.client.post(
-   ParadymEndpoints.REQUEST_PRESENTATION,
-   mapPresentationRequest(request)
- );
+
+    const endpoint =
+      withWalletId(
+        ParadymEndpoints.REQUEST_PRESENTATION,
+        this.config.walletId
+      );
 
 
-return mapPresentationResponse(response);
+    const response =
+      await this.client.post(
+        endpoint,
+        mapPresentationRequest(request)
+      );
+
+
+    return mapPresentationResponse(response);
+
   }
 
 }

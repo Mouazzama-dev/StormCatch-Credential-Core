@@ -1,5 +1,6 @@
 import type { ParadymApiClient }
 from "./paradym-api-client.js";
+
 import type {
   CredentialIssueRequest,
   CredentialIssueResponse
@@ -10,17 +11,31 @@ import {
 } from "./endpoints.js";
 
 import {
- mapCredentialRequest,
- mapCredentialResponse,
- mapRevocationRequest
+  mapCredentialResponse,
+  mapRevocationRequest,
+  mapIssuancePayload
 } from "./mapper.js";
+
+import {
+  getCredentialTemplate
+} from "./credential-template.js";
+
+import {
+  withWalletId
+} from "./url.js";
+
+import type { ParadymConfig }
+from "./config.js";
+
 
 export class ParadymIssuer {
 
 
   constructor(
-  private readonly client: ParadymApiClient
-) {}
+    private readonly client: ParadymApiClient,
+    private readonly config: ParadymConfig
+  ) {}
+
 
 
   async issue(
@@ -28,11 +43,31 @@ export class ParadymIssuer {
   ): Promise<CredentialIssueResponse> {
 
 
+    const template =
+      getCredentialTemplate(
+        request.credentialType,
+        this.config.templates
+      );
+
+
+    const payload =
+      mapIssuancePayload(
+        request,
+        template
+      );
+
+
+    const endpoint =
+      withWalletId(
+        ParadymEndpoints.CREATE_CREDENTIAL_OFFER,
+        this.config.walletId
+      );
+
+
     const response =
       await this.client.post(
-        ParadymEndpoints.ISSUE_CREDENTIAL,
-          mapCredentialRequest(request)
-
+        endpoint,
+        payload
       );
 
 
@@ -51,10 +86,17 @@ export class ParadymIssuer {
   ): Promise<void> {
 
 
-await this.client.post(
-  ParadymEndpoints.REVOKE_CREDENTIAL,
-  mapRevocationRequest(request)
-);
+    const endpoint =
+      withWalletId(
+        ParadymEndpoints.REVOKE_CREDENTIAL,
+        this.config.walletId
+      );
+
+
+    await this.client.post(
+      endpoint,
+      mapRevocationRequest(request)
+    );
 
   }
 

@@ -1,12 +1,12 @@
 export const ParadymEndpoints = {
 
-  ISSUE_CREDENTIAL:
-    "/credentials/issue",
+  CREATE_CREDENTIAL_OFFER:
+    "/v1/wallets/{walletId}/openid4vc/issuance/offer",
 
   REQUEST_PRESENTATION:
-    "/presentations/request",
+    "/v1/wallets/{walletId}/openid4vc/verification/request",
 
   REVOKE_CREDENTIAL:
-    "/credentials/revoke"
+    "/v1/wallets/{walletId}/credentials/revoke"
 
 };

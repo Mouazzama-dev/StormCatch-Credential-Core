@@ -13,6 +13,8 @@ from "../paradym/wallet.js";
 import { MockParadymClient }
 from "./mock-paradym-client.js";
 
+import type { ParadymConfig } from "../paradym/config.js";
+
 
 export function createMockParadymProvider(){
 
@@ -20,12 +22,53 @@ export function createMockParadymProvider(){
     new MockParadymClient();
 
 
+ const config: ParadymConfig = {
+
+  baseUrl: "mock",
+
+  apiKey: "mock",
+
+  walletId: "mock-wallet",
+
+  templates: {
+
+    PayloadCredential: {
+
+      templateId:
+        "mock-payload-template",
+
+      format:
+        "sd-jwt-vc"
+
+    },
+
+    StateAttestationCredential: {
+
+      templateId:
+        "mock-state-template",
+
+      format:
+        "sd-jwt-vc"
+
+    }
+
+  }
+
+};
+
+
   const issuer =
-    new ParadymIssuer(client);
+    new ParadymIssuer(
+      client,
+      config
+    );
 
 
   const verifier =
-    new ParadymVerifier(client);
+  new ParadymVerifier(
+    client,
+    config
+  );
 
 
   const wallet =

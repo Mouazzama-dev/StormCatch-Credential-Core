@@ -46,23 +46,31 @@ import type {
 
 
 export function mapCredentialResponse(
-  response: unknown
+ response: unknown
 ): CredentialIssueResponse {
 
 
-  const data =
-    response as Record<string, unknown>;
+ const data =
+ response as Record<string, unknown>;
 
 
-  return {
+ return {
 
-    credentialId:
-      String(data["credentialId"] ?? data["id"]),
+   issuanceId:
+    String(data["id"]),
 
-    credentialData:
-      response
+   status:
+    String(data["status"] ?? "pending"),
 
-  };
+   offerUri:
+    String(data["offerUri"]),
+
+   offerQrUri:
+    data["offerQrUri"]
+      ? String(data["offerQrUri"])
+      : undefined
+
+ };
 
 }
 
@@ -155,6 +163,40 @@ export function mapRevocationRequest(
 
     reason:
       request.reason
+
+  };
+
+}
+
+export interface ParadymIssuancePayload {
+
+  credentialConfigurationId: string;
+
+  format: string;
+
+  claims: Record<string, unknown>;
+
+}
+
+export function mapIssuancePayload(
+  request: CredentialIssueRequest,
+  template: {
+    templateId:string;
+    format:string;
+  }
+): ParadymIssuancePayload {
+
+
+  return {
+
+    credentialConfigurationId:
+      template.templateId,
+
+    format:
+      template.format,
+
+    claims:
+      request.claims
 
   };
 

@@ -19,11 +19,17 @@ export function createParadymProvider(
 
 
   const issuer =
-    new ParadymIssuer(client);
+ new ParadymIssuer(
+   client,
+   config
+ );
 
 
   const verifier =
-    new ParadymVerifier(client);
+    new ParadymVerifier(
+  client,
+  config
+)
 
 
   const wallet =

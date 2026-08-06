@@ -19,42 +19,72 @@ implements ParadymApiClient {
     );
 
 
-    switch(path) {
+    if (
+      path.includes(
+        "/openid4vc/issuance/offer"
+      )
+    ) {
 
+      return {
 
-      case "/credentials/issue":
+        id:
+          "mock-issuance-001",
 
-        return {
-          credentialId:
-            crypto.randomUUID(),
+        status:
+          "pending",
 
-          credentialData:
-            body
-        };
+        offerUri:
+          "openid-credential-offer://mock-offer",
 
+        offerQrUri:
+          "mock-qr-code",
 
-      case "/presentations/request":
+        request:
+          body
 
-        return {
-          presentation:
-            body
-        };
-
-
-      case "/credentials/revoke":
-
-        return {
-          success:true
-        };
-
-
-      default:
-
-        throw new Error(
-          `Unknown mock endpoint: ${path}`
-        );
+      };
 
     }
+
+
+    if (
+      path.includes(
+        "/openid4vc/verification/request"
+      )
+    ) {
+
+      return {
+
+        presentationRequest:
+          body
+
+      };
+
+    }
+
+
+    if (
+      path.includes(
+        "/credentials/revoke"
+      )
+    ) {
+
+      return {
+
+        success:
+          true,
+
+        revokedAt:
+          new Date()
+
+      };
+
+    }
+
+
+    throw new Error(
+      `Unknown mock endpoint: ${path}`
+    );
 
   }
 
