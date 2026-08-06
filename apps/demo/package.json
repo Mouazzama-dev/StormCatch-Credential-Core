@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "type": "module",
   "dependencies": {
-    "@stormcatch/core": "workspace:*",
-    "@stormcatch/providers": "workspace:*"
-  },
+  "@stormcatch/core": "file:../../packages/core",
+  "@stormcatch/providers": "file:../../packages/providers"
+}
+  ,
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js"

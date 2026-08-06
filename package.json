@@ -4,9 +4,12 @@
   "private": true,
   "description": "Stormcatch credential lifecycle SDK",
   "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
+  "packages/core",
+  "packages/providers",
+  "packages/credentials",
+  "packages/trust",
+  "apps/demo"
+],
   "scripts": {
     "test": "echo \"No tests yet\"",
     "build": "echo \"No build yet\""
