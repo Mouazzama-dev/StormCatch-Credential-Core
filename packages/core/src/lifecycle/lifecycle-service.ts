@@ -48,21 +48,33 @@ export class CredentialLifecycleService {
 
 
 
-    async revoke(
-        credential: CredentialRecord
-    ): Promise<void> {
+async revoke(
+ credential: CredentialRecord
+): Promise<CredentialRecord> {
 
 
-        await this.provider.revokeCredential({
+ await this.provider.revokeCredential({
 
-    credentialId: credential.id,
+   credentialId: credential.id,
 
-    issuerDid: credential.issuerId,
+   issuerDid: credential.issuerId,
 
-    reason: "manual_revocation"
+   reason:"manual_revocation"
 
-    });
-  }
+ });
+
+
+ return {
+
+   ...credential,
+
+   status: CredentialStatus.REVOKED,
+
+   revokedAt:new Date()
+
+ };
+
+}
 
 async present(
   request: {

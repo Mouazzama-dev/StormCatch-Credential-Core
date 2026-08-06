@@ -78,3 +78,14 @@ console.log(
  "Presentation:",
  presentation
 );
+
+const revoked =
+ await lifecycle.revoke(
+   issued
+ );
+
+
+console.log(
+ "Revoked:",
+ revoked
+);
