@@ -3,25 +3,22 @@ import {
   CredentialStatus
 } from "@stormcatch/core";
 
-
-import {
-  createMockParadymProvider
-} from "@stormcatch/providers";
+import "dotenv/config";
 
 import {
  createProvider
 } from "./provider.js";
 
+console.log(
+  "Paradym key exists:",
+  !!process.env.PARADYM_API_KEY
+);
 
-const paradymConfig = {
+console.log(
+  "USE_MOCK:",
+  process.env.USE_MOCK
+);
 
-  baseUrl:
-    "https://api.paradym.id",
-
-  apiKey:
-    "test-key"
-
-};
 
 
 const provider =

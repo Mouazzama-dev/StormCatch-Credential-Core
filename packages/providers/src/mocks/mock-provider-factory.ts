@@ -21,6 +21,8 @@ export function createMockParadymProvider(){
   const client =
     new MockParadymClient();
 
+   console.log("MOCK FACTORY LOADED"); 
+
 
  const config: ParadymConfig = {
 

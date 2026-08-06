@@ -5,31 +5,30 @@ import type {
 
 export const appConfig = {
 
-  useMock: true,
-
+  useMock:   process.env.USE_MOCK !== "false",
 
   paradym: {
 
     baseUrl:
-      "https://api.paradym.id",
+      process.env.PARADYM_BASE_URL!,
 
     apiKey:
-      "replace-with-real-key",
+      process.env.PARADYM_API_KEY!,
 
     walletId:
-      "mock-wallet",
+      process.env.PARADYM_WALLET_ID!,
 
     templates: {
 
       PayloadCredential: {
 
-        templateId:
-          "mock-payload-template",
+  templateId:
+    "cmsgzljlg000b02s60l1t6r18",
 
-        format:
-          "sd-jwt-vc"
+  format:
+    "sd-jwt-vc"
 
-      },
+},
 
       StateAttestationCredential: {
 

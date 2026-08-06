@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "type": "module",
   "dependencies": {
-  "@stormcatch/core": "file:../../packages/core",
-  "@stormcatch/providers": "file:../../packages/providers"
-}
-  ,
+    "@stormcatch/core": "file:../../packages/core",
+    "@stormcatch/providers": "file:../../packages/providers",
+    "dotenv": "^17.4.2"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2"
   }
 }

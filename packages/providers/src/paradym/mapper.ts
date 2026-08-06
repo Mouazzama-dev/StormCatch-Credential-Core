@@ -1,7 +1,19 @@
 import type {
-  CredentialIssueRequest
+  CredentialIssueRequest,
+  CredentialIssueResponse,
+  PresentationRequest,
+  PresentationResponse,
+  RevocationRequest
 } from "./types.js";
 
+import type {
+  ParadymCredentialTemplates
+} from "./config.js";
+
+
+// -------------------------
+// Credential Issue Mapping
+// -------------------------
 
 export interface ParadymCredentialRequest {
 
@@ -16,11 +28,9 @@ export interface ParadymCredentialRequest {
 }
 
 
-
 export function mapCredentialRequest(
   request: CredentialIssueRequest
 ): ParadymCredentialRequest {
-
 
   return {
 
@@ -40,53 +50,97 @@ export function mapCredentialRequest(
 
 }
 
-import type {
-  CredentialIssueResponse
-} from "./types.js";
 
+// -------------------------
+// Paradym Issuance Offer
+// -------------------------
 
-export function mapCredentialResponse(
- response: unknown
-): CredentialIssueResponse {
+export interface ParadymIssuancePayload {
 
+  credentials: Array<{
 
- const data =
- response as Record<string, unknown>;
+    credentialTemplateId: string;
 
+    attributes: Record<string, unknown>;
 
- return {
-
-   issuanceId:
-    String(data["id"]),
-
-   status:
-    String(data["status"] ?? "pending"),
-
-   offerUri:
-    String(data["offerUri"]),
-
-   offerQrUri:
-    data["offerQrUri"]
-      ? String(data["offerQrUri"])
-      : undefined
-
- };
+  }>;
 
 }
 
-import type {
-  PresentationRequest,
-  PresentationResponse
-} from "./types.js";
 
+export function mapIssuancePayload(
+  request: CredentialIssueRequest,
+  template: ParadymCredentialTemplates[string]
+): ParadymIssuancePayload {
+
+
+  return {
+
+    credentials: [
+
+      {
+
+        credentialTemplateId:
+          template.templateId,
+
+
+        attributes:
+          request.claims
+
+      }
+
+    ]
+
+  };
+
+}
+
+
+// -------------------------
+// Credential Response
+// -------------------------
+
+export function mapCredentialResponse(
+  response: unknown
+): CredentialIssueResponse {
+
+
+  const data =
+    response as Record<string, unknown>;
+
+
+  return {
+
+    issuanceId:
+      String(data["id"]),
+
+    status:
+      String(data["status"] ?? "pending"),
+
+    offerUri:
+      data["offerUri"]
+        ? String(data["offerUri"])
+        : "",
+
+    offerQrUri:
+      data["offerQrUri"]
+        ? String(data["offerQrUri"])
+        : undefined
+
+  };
+
+}
+
+
+// -------------------------
+// Presentation Mapping
+// -------------------------
 
 export interface ParadymPresentationRequest {
 
-  verifier:
-    string;
+  verifier: string;
 
-  requestedCredentials:
-    string[];
+  requestedCredentials: string[];
 
   requestedClaims?:
     Record<string,string[]>;
@@ -94,11 +148,9 @@ export interface ParadymPresentationRequest {
 }
 
 
-
 export function mapPresentationRequest(
   request: PresentationRequest
 ): ParadymPresentationRequest {
-
 
   return {
 
@@ -116,11 +168,9 @@ export function mapPresentationRequest(
 }
 
 
-
 export function mapPresentationResponse(
   response: unknown
 ): PresentationResponse {
-
 
   return {
 
@@ -131,10 +181,10 @@ export function mapPresentationResponse(
 
 }
 
-import type {
-  RevocationRequest
-} from "./types.js";
 
+// -------------------------
+// Revocation Mapping
+// -------------------------
 
 export interface ParadymRevocationRequest {
 
@@ -147,11 +197,9 @@ export interface ParadymRevocationRequest {
 }
 
 
-
 export function mapRevocationRequest(
   request: RevocationRequest
 ): ParadymRevocationRequest {
-
 
   return {
 
@@ -163,40 +211,6 @@ export function mapRevocationRequest(
 
     reason:
       request.reason
-
-  };
-
-}
-
-export interface ParadymIssuancePayload {
-
-  credentialConfigurationId: string;
-
-  format: string;
-
-  claims: Record<string, unknown>;
-
-}
-
-export function mapIssuancePayload(
-  request: CredentialIssueRequest,
-  template: {
-    templateId:string;
-    format:string;
-  }
-): ParadymIssuancePayload {
-
-
-  return {
-
-    credentialConfigurationId:
-      template.templateId,
-
-    format:
-      template.format,
-
-    claims:
-      request.claims
 
   };
 

@@ -13,7 +13,7 @@ export function createParadymProvider(
   config: ParadymConfig
 ): ParadymProvider {
 
-
+console.log("REAL PARADYM FACTORY LOADED");
   const client =
     new ParadymClient(config);
 

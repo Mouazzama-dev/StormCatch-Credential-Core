@@ -18,8 +18,7 @@ export interface CredentialIssueResponse {
 
   status: string;
 
-  offerUri: string;
-
+  offerUri?: string;
   offerQrUri?: string;
 
 }
