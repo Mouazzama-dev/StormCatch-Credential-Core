@@ -2,6 +2,8 @@ export interface CredentialIssueRequest {
 
   credentialType: string;
 
+  issuerDid: string;
+
   subjectDid: string;
 
   claims: Record<string, unknown>;

@@ -16,15 +16,22 @@ export class ParadymClient implements ParadymApiClient  {
 
 
     const response = await fetch(
-      `${this.config.apiUrl}${path}`,
+      `${this.config.baseUrl}${path}`,
       {
         method: "POST",
 
         headers: {
-          "Content-Type": "application/json",
-          "Authorization":
-            `Bearer ${this.config.apiKey}`
-        },
+  "Content-Type": "application/json",
+
+  "Authorization":
+    `Bearer ${this.config.apiKey}`,
+
+  ...(this.config.tenantId
+    ? {
+        "X-Tenant-ID": this.config.tenantId
+      }
+    : {})
+},
 
         body: JSON.stringify(body)
       }
@@ -32,15 +39,16 @@ export class ParadymClient implements ParadymApiClient  {
 
 
     if (!response.ok) {
+        const error = await response.text();
 
       throw new Error(
-        `Paradym API error: ${response.status}`
+        `Paradym API error: ${response.status}: ${error}`
       );
 
     }
 
 
-    return response.json();
+    return await response.json();
 
   }
 

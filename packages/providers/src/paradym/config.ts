@@ -1,6 +1,6 @@
 export interface ParadymConfig {
 
-  apiUrl: string;
+  baseUrl: string;
 
   apiKey: string;
 

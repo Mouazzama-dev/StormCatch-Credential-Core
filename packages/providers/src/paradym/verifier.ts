@@ -5,6 +5,15 @@ import type {
   PresentationResponse
 } from "./types.js";
 
+import {
+  mapPresentationRequest,
+  mapPresentationResponse
+} from "./mapper.js";
+
+import {
+  ParadymEndpoints
+} from "./endpoints.js";
+
 
 export class ParadymVerifier {
 
@@ -19,16 +28,14 @@ export class ParadymVerifier {
     request: PresentationRequest
   ): Promise<PresentationResponse> {
 
+const response =
+ await this.client.post(
+   ParadymEndpoints.REQUEST_PRESENTATION,
+   mapPresentationRequest(request)
+ );
 
-    const response =
-      await this.client.post(
-        "/presentations/request",
-        request
-      );
 
-
-    return response as PresentationResponse;
-
+return mapPresentationResponse(response);
   }
 
 }

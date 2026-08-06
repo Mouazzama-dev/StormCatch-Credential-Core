@@ -5,6 +5,15 @@ import type {
   CredentialIssueResponse
 } from "./types.js";
 
+import {
+  ParadymEndpoints
+} from "./endpoints.js";
+
+import {
+ mapCredentialRequest,
+ mapCredentialResponse,
+ mapRevocationRequest
+} from "./mapper.js";
 
 export class ParadymIssuer {
 
@@ -21,12 +30,13 @@ export class ParadymIssuer {
 
     const response =
       await this.client.post(
-        "/credentials/issue",
-        request
+        ParadymEndpoints.ISSUE_CREDENTIAL,
+          mapCredentialRequest(request)
+
       );
 
 
-    return response as CredentialIssueResponse;
+    return mapCredentialResponse(response);
 
   }
 
@@ -41,10 +51,10 @@ export class ParadymIssuer {
   ): Promise<void> {
 
 
-    await this.client.post(
-      "/credentials/revoke",
-      request
-    );
+await this.client.post(
+  ParadymEndpoints.REVOKE_CREDENTIAL,
+  mapRevocationRequest(request)
+);
 
   }
 
