@@ -8,9 +8,24 @@ import {
   createMockParadymProvider
 } from "@stormcatch/providers";
 
+import {
+ createProvider
+} from "./provider.js";
+
+
+const paradymConfig = {
+
+  baseUrl:
+    "https://api.paradym.id",
+
+  apiKey:
+    "test-key"
+
+};
+
 
 const provider =
-  createMockParadymProvider();
+  createProvider();
 
 
 const lifecycle =
@@ -89,3 +104,4 @@ console.log(
  "Revoked:",
  revoked
 );
+
